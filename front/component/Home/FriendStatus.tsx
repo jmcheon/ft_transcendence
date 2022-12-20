@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import useSWR, { mutate } from "swr";
+import { Status } from "../../interfaceType";
 import styles from "../../styles/LayoutBox.module.css";
 import Loading from "../errorAndLoading/Loading";
 import useSocket from "../Utils/socket";
@@ -29,11 +30,11 @@ export default function FriendStatus({ id }: { id: number }) {
         {friendListData &&
           friendListData.map((eachFriend: any) => {
             const color = { color: "" };
-            if (eachFriend.status === "Login") {
+            if (eachFriend.status === Status.LOGIN) {
               color.color = "green";
-            } else if (eachFriend.status === "Logout") {
+            } else if (eachFriend.status === Status.LOGOUT) {
               color.color = "red";
-            } else if (eachFriend.status === "Game") {
+            } else if (eachFriend.status === Status.PLAYING) {
               color.color = "yellow";
             }
             return (

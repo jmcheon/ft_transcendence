@@ -15,20 +15,12 @@ export enum Cookies {
   REFRESH_TOKEN = 'refreshToken',
 }
 
-export const StatusArray = [
-  'Login',
-  'Logout',
-  'Playing',
-  'Game',
-  'watching',
-  'ready',
-];
+export const StatusArray = ['Login', 'Logout', 'Playing', 'watching', 'ready'];
 
 export enum Status {
   LOGIN = 'Login',
   LOGOUT = 'Logout',
   PLAYING = 'Playing',
-  GAME = 'Game',
   WATCHING = 'watching',
   READY = 'ready',
 }

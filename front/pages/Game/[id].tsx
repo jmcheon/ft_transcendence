@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import Gameover from "../../component/Game/PlayGame/Gameover";
 import GameExplain from "../../component/Game/PlayGame/GameExplain";
 import { toast } from "react-toastify";
+import { Status } from "../../interfaceType";
 
 export default function Gaming({
   accessToken,
@@ -63,7 +64,7 @@ export default function Gaming({
   };
 
   useEffect((): (() => void) => {
-    statusChange("Game");
+    statusChange(Status.PLAYING);
 
     socket?.emit("room-list");
 

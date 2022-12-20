@@ -7,7 +7,6 @@ export enum Status {
   LOGIN = "Login",
   LOGOUT = "Logout",
   PLAYING = "Playing",
-  GAME = "Game",
   WATCHING = "watching",
   READY = "ready",
 }
