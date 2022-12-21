@@ -184,7 +184,11 @@ export class UserService implements IUserService {
 
   async validateUser(userDetails: UserDetails) {
     const { intra_id } = userDetails;
-    const user = await this.userRepository.findOneBy({ intra_id });
+    // const user = await this.userRepository.findOneBy({ intra_id });
+    const user = await this.userRepository
+      .createQueryBuilder('users')
+      .where('users.intra_id=:intra_id', { intra_id })
+      .getOne();
     if (user) return user;
     return this.createUser(userDetails);
   }
@@ -195,9 +199,20 @@ export class UserService implements IUserService {
     return this.userRepository.save(user);
   }
 
+  async createTestUser(name: string) {
+    const userDetails = {
+      intra_id: name,
+      email: name + '@student.42.fr',
+      image_url: process.env.DUMMY_URL,
+      username: name,
+    };
+    // console.log('user detals:', userDetails);
+    return await this.validateUser(userDetails);
+  }
+
   async validateDummy(userDetails: UserDetails) {
     const { intra_id } = userDetails;
-    console.log('dummy intra id:', intra_id);
+    // console.log('dummy intra id:', intra_id);
     const user = await this.userRepository
       .createQueryBuilder('users')
       .where('users.intra_id=:intra_id', { intra_id })
@@ -214,7 +229,7 @@ export class UserService implements IUserService {
     let name = 'dummy';
     let userDetails = {
       intra_id: name,
-      email: name,
+      email: name + '@student.42.fr',
       image_url: process.env.DUMMY_URL,
       username: name,
     };
@@ -226,7 +241,7 @@ export class UserService implements IUserService {
       name += number;
       userDetails = {
         intra_id: name,
-        email: name,
+        email: name + '@student.42.fr',
         image_url: process.env.DUMMY_URL,
         username: name,
       };
