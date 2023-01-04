@@ -167,9 +167,10 @@ export class GameEvents
   async readyGame(@ConnectedSocket() client: Socket) {
     if (!client) return;
     const user = await this.getUserfromSocket(client);
+    if (!user) return;
     console.log('stattttttttttttttt', user.username, user.status);
     let stat: string = user.status;
-    if (stat === Status.PLAYING) {
+    if (stat === 'Game') {
       client.emit('playing');
       return;
     }
@@ -329,7 +330,7 @@ export class GameEvents
     // check if watch User is already playing to another window
     const user = await this.getUserfromSocket(watcher);
     let stat: string = user.status;
-    if (stat === Status.PLAYING) {
+    if (stat === 'Game') {
       console.log('user is playing cant watching other game');
       watcher.emit('playing');
       return;
@@ -437,8 +438,9 @@ export class GameEvents
   @SubscribeMessage('Private')
   async startPrivateQ(
     @ConnectedSocket() client: Socket,
-    @MessageBody() data?, // data receiver send event to server with { sender.id } // if socket is sender, data is null
-  ) {
+    @MessageBody() data?, // data receiver send event to server with { sender.id }
+  ) // if socket is sender, data is null
+  {
     let receiver;
     if (!data) return;
     if (this.queuePv.has(data)) {
